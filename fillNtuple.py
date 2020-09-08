@@ -6,10 +6,18 @@ import basf2 as b2
 import modularAnalysis as ma
 import variables.collections as vc
 import vertex as vx
+from beamparameters import add_beamparameters
 
 #b2.logging.log_level = b2.LogLevel.WARNING
 
+b2.conditions.append_testing_payloads('localdb/database.txt')
+
 path = b2.create_path()
+
+print(b2.conditions.globaltags)
+
+
+
 ma.inputMdstList("default", [input_file], path=path)
 
 # Book charged Kaons and Pions
@@ -29,7 +37,7 @@ vx.treeFit('D*+:my', conf_level=0, path=path)
 #ma.printList('D0:my', True, path=path)
 #ma.printVariableValues('D0:my', ['M', 'p'], path=path)
 
-ma.printMCParticles(path=path)
+#ma.printMCParticles(path=path)
 
 
 from variables import variables as vm
@@ -56,6 +64,10 @@ vm.addAlias('slowPiID', 'daughter(1,pionID)')
 
 Vars = [ 'xDstar',  'yDstar',  'zDstar',  'xGenDstar', 'yGenDstar', 'zGenDstar', 'dxDstar', 'dyDstar', 'dzDstar', 'pDstar',  'eDstar',  'eCmsDstar', 'mDstar',  'mD', 'slowPiID']
 Vars.append('isSignal')
+Vars.append('expNum')
+Vars.append('runNum')
+Vars.append('IPX')
+Vars.append('IPCov(0,0)')
 
 
 

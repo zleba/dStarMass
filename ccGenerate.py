@@ -27,9 +27,8 @@ import modularAnalysis as ma
 import simulation as si
 import reconstruction as re
 import generators as ge
-
-
 from beamparameters import add_beamparameters
+
 
 b2.logging.log_level = b2.LogLevel.INFO
 
@@ -56,7 +55,6 @@ def Sqr(x):
 vtxPos = [-490,  170, -250]
 #          xx      ,  xy   ,   xz    ,     yy  ,   yz,       zz
 covMat = [10.,        0,      0,          0.2,      0,        250]
-
 
 vtxPos = [x*1e-4 for x in vtxPos]
 covMat = [Sqr(x*1e-4) for x in covMat]
