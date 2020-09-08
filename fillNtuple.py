@@ -8,17 +8,20 @@ import variables.collections as vc
 import vertex as vx
 from beamparameters import add_beamparameters
 
-#b2.logging.log_level = b2.LogLevel.WARNING
+b2.logging.log_level = b2.LogLevel.DEBUG
 
-b2.conditions.append_testing_payloads('localdb/database.txt')
+b2.conditions.prepend_testing_payloads('localdb/database.txt')
+
 
 path = b2.create_path()
 
-print(b2.conditions.globaltags)
 
 
 
 ma.inputMdstList("default", [input_file], path=path)
+
+
+print(b2.conditions.globaltags)
 
 # Book charged Kaons and Pions
 from stdCharged import stdK, stdPi
@@ -32,10 +35,10 @@ ma.reconstructDecay('D0:my -> K-:higheff pi+:higheff', cut='1.75 < M < 1.95', pa
 ma.reconstructDecay('D*+:my -> D0:my pi+:higheff', cut='1.90 < M < 2.25' , path=path)
 
 # Fit vertex
-vx.treeFit('D*+:my', conf_level=0, path=path)
+vx.treeFit('D*+:my', ipConstraint=True, updateAllDaughters=True, conf_level=0, path=path)
 
 #ma.printList('D0:my', True, path=path)
-#ma.printVariableValues('D0:my', ['M', 'p'], path=path)
+ma.printVariableValues('D0:my', ['IPX'], path=path)
 
 #ma.printMCParticles(path=path)
 
@@ -64,8 +67,6 @@ vm.addAlias('slowPiID', 'daughter(1,pionID)')
 
 Vars = [ 'xDstar',  'yDstar',  'zDstar',  'xGenDstar', 'yGenDstar', 'zGenDstar', 'dxDstar', 'dyDstar', 'dzDstar', 'pDstar',  'eDstar',  'eCmsDstar', 'mDstar',  'mD', 'slowPiID']
 Vars.append('isSignal')
-Vars.append('expNum')
-Vars.append('runNum')
 Vars.append('IPX')
 Vars.append('IPCov(0,0)')
 
