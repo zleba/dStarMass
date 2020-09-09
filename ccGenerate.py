@@ -22,12 +22,18 @@
 #
 ######################################################
 
+import argparse
 import basf2 as b2
 import modularAnalysis as ma
 import simulation as si
 import reconstruction as re
 import generators as ge
 from beamparameters import add_beamparameters
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("ID")
+args = parser.parse_args()
 
 
 b2.logging.log_level = b2.LogLevel.INFO
@@ -63,7 +69,7 @@ beamparameters.param("covVertex", covMat)
 beamparameters.param("vertex", vtxPos)
 
 
-ma.setupEventInfo(100, path=my_path)
+ma.setupEventInfo(1000, path=my_path)
 ge.add_inclusive_continuum_generator(finalstate="ccbar",
                                      particles=["D*+"],
                                      userdecfile=b2.find_file('ccbar.dec'),
@@ -78,7 +84,7 @@ re.add_reconstruction(path=my_path)
 
 
 
-re.add_mdst_output(mc=True, filename='ccbarGenerated.root', path=my_path)
+re.add_mdst_output(mc=True, filename='/nfs/dust/belle2/user/zlebcr/belle2/dStarMass/farm/outFiles/ccbarGenerated_'+args.ID+'.root', path=my_path)
 
 
 # print event numbers

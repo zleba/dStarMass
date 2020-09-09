@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-input_file = 'ccbarGenerated.root'
+#input_file = 'ccbarGenerated.root'
+input_file = 'farm/outFiles/CC.root'
 
 import basf2 as b2
 import modularAnalysis as ma
@@ -35,10 +36,11 @@ ma.reconstructDecay('D0:my -> K-:higheff pi+:higheff', cut='1.75 < M < 1.95', pa
 ma.reconstructDecay('D*+:my -> D0:my pi+:higheff', cut='1.90 < M < 2.25' , path=path)
 
 # Fit vertex
-vx.treeFit('D*+:my', ipConstraint=True, updateAllDaughters=True, conf_level=0, path=path)
+#vx.treeFit('D*+:my', ipConstraint=True, updateAllDaughters=True, conf_level=0, path=path)
+vx.treeFit('D*+:my', conf_level=0, path=path)
 
 #ma.printList('D0:my', True, path=path)
-ma.printVariableValues('D0:my', ['IPX'], path=path)
+#ma.printVariableValues('D0:my', ['IPX'], path=path)
 
 #ma.printMCParticles(path=path)
 
@@ -77,8 +79,8 @@ ma.matchMCTruth('D*+:my', path=path)
 
 
 ma.variablesToNtuple('D*+:my', Vars, 
-                     filename='nTuple.root', treename="Dstar", path=path)
+                     filename='nTupleNo.root', treename="Dstar", path=path)
 
 
-b2.process(path, max_event=1000)
+b2.process(path, max_event=100000)
 print(b2.statistics)
